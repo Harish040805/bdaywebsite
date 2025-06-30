@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Input</title>
+    <link rel="stylesheet" href="BDaycss.css">
+<style>
+        body {
+            background-image: url('https://img.freepik.com/free-vector/bokeh-lights-glitter-background_1048-8548.jpg'); 
+            font-family: Arial, sans-serif;
+			background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        h1 {
+            color: #fff; 
+            text-align: center;
+            padding: 20px;
+            background-color: #7a288a;
+            border-radius: 10px;
+        }
+        
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff; 
+            border: 1px solid #7a288a; 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #7a288a; 
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        a {
+            background-color: #7a288a; 
+            color: #fff; 
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        a:hover {
+            background-color: #5c1a6c; 
+        }
+		#proceed-button {
+        background-color: #7a288a;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+			#file-chooser {
+  opacity: 0; /* hide the original input */
+  position: absolute;
+  z-index: -1;
+}
+
+#file-chooser-container {
+  position: relative;
+}
+
+#file-chooser-container button {
+  background-color: #7a288a; 
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+	</style>
+</head>
+<body>
+    <h1>Enter Your Birthday Details</h1>
+    <form id="birthdayForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="file" id="image" accept="image/*" required>
+        <button type="button" id="loginButton">Login</button>
+    </form>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const image = document.getElementById('image').files[0];
+            const reader = new FileReader();
+            
+            reader.onloadend = function() {
+                
+                const imageData = encodeURIComponent(reader.result);
+                const url = `BDay2.html?name=${encodeURIComponent(name)}&image=${imageData}`;
+                
+                
+                window.open(url, "_self"); 
+            }
+            if (image) {
+                reader.readAsDataURL(image); 
+            }
+        });
+    </script>
+</body>
+</html>

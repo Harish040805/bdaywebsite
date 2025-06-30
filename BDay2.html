@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Celebration</title>
+    <link rel="stylesheet" href="BDaycss.css">
+	<style>
+        body {
+            background-image: url('https://i.pinimg.com/736x/89/b5/92/89b592851a460d38a04118c3735c28df.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .birthday-wish {
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            background-color: violet;
+            color: white;
+            text-shadow: 5px 5px 8px #fff;
+        }
+        #birthday-image {
+            height: 200px;
+            width: 200px;
+            border: 5px solid #fff;
+            border-radius: 50%;
+        }
+        p {
+            background-color: violet;
+            color: white;
+        }
+        button {
+            background-color: #ff69b4;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+		.home-icon {
+			color: #C9C3E3;
+			transition: color 0.1s ease-in-out;
+		}
+		.home-icon:hover {
+			color: #ffffff; 
+		}
+		#imageContainer {
+			width: 18%;
+			height: 18%;	
+		}
+		
+#imageContainer img {
+    width: 100%;  
+    height: 100%; 
+    object-fit: contain;  
+}
+	</style>
+</head>
+<body>
+    <center>
+        <h1 id="greeting"></h1>
+        <div id="imageContainer">
+            <img id="birthdayImage" alt="Birthday Image" />
+        </div>
+        <img src="https://i.pinimg.com/originals/d6/f9/49/d6f94966e9ec32b8efcd323e35b44a62.gif" alt="Birthday GIF" style="width: 20%; height:20%">
+<script>
+    function getUrlParams() {
+        const params = {};
+        const queryString = window.location.search.slice(1);
+        const pairs = queryString.split("&");
+        for (const pair of pairs) {
+            const [key, value] = pair.split("=");
+            params[decodeURIComponent(key)] = decodeURIComponent(value);
+        }
+        return params;
+    }
+
+    window.onload = function() {
+        const { name, image } = getUrlParams();
+        
+        if (name && image) {
+            document.getElementById('greeting').innerText = `HAPPY BIRTHDAY ${name}!`;
+            document.getElementById('birthdayImage').src = image;
+            showNotification();
+        } else {
+            document.getElementById('greeting').innerText = 'No birthday information found.';
+        }
+    }
+
+    function showNotification() {
+        alert("Welcome! Click 'OK' to play birthday audio.");
+        document.getElementById('birthdayAudio').play();
+    }
+</script>
+	<audio id="birthdayAudio" loop>
+      <source src="C:\Users\HP\Downloads\happy-birthday-155461 (1).mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+</center>
+</body>
+</html>

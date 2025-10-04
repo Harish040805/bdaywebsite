@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Alwin!</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{height:100vh;overflow:hidden;background:radial-gradient(circle at top,#001F3F,#000);display:flex;justify-content:center;align-items:center;font-family:'Poppins',sans-serif;color:#fff;position:relative;text-align:center}
+#balloon-container{position:absolute;width:100%;height:100%;overflow:hidden;top:0;left:0;z-index:0}
+.balloon{position:absolute;width:60px;height:80px;border-radius:50%;background:linear-gradient(to bottom,#ff6b6b,#c0392b);animation:float 8s ease-in infinite}
+@keyframes float{0%{transform:translateY(100vh) scale(1)}100%{transform:translateY(-120vh) scale(1.2)}}
+#sparkles{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:1}
+.sparkle{position:absolute;width:4px;height:4px;background:#fff;border-radius:50%;opacity:.8;animation:twinkle 2s infinite ease-in-out}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.8)}50%{opacity:1;transform:scale(1.5)}}
+.container{z-index:2;position:relative}
+h1{font-size:2.5em;text-shadow:0 0 20px #00f2ff;animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{from{text-shadow:0 0 10px #00f2ff,0 0 20px #00f2ff}to{text-shadow:0 0 25px #ff00f7,0 0 45px #ff00f7}}
+img{width:300px;height:300px;border-radius:15px;opacity:0;transition:opacity 1s ease;margin:10px}
+button{margin-top:20px;padding:12px 25px;background:#00bcd4;border:none;border-radius:25px;font-size:1.1em;color:#fff;cursor:pointer;transition:.3s;box-shadow:0 0 10px #00bcd4}
+button:hover{background:#0097a7;box-shadow:0 0 20px #00e5ff}
+#message{margin-top:30px;font-size:1.3em;opacity:0;transition:1s ease}
+
+/* Firewall overlay styles */
+#firewall-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center,#001,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;color:#00ffea;font-family:'Courier New',monospace;text-align:center;overflow:hidden}
+.firewall-lines{position:absolute;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(to bottom,rgba(0,255,234,0.06) 0,rgba(0,255,234,0.06) 2px,transparent 2px,transparent 4px);animation:scan 2s linear infinite}
+@keyframes scan{from{background-position-y:0}to{background-position-y:100%}}
+#firewall-box{z-index:1000;padding:22px 28px;border:2px solid #00ffea;border-radius:12px;background:rgba(0,255,234,0.06);color:#00ffea;font-size:1.05em;box-shadow:0 0 30px rgba(0,255,234,0.08)}
+#firewall-text{font-size:1.2em;margin-bottom:12px;text-shadow:0 0 10px #00ffea}
+#name-input{width:360px;padding:10px 12px;border-radius:8px;border:1px solid rgba(0,255,234,0.25);background:rgba(0,0,0,0.4);color:#00ffea;font-family:'Courier New',monospace;font-size:1em;outline:none;box-shadow:inset 0 0 10px rgba(0,255,234,0.02)}
+#name-input:focus{border-color:#00ffea;background:rgba(0,0,0,0.6)}
+#firewall-access{margin-top:12px;padding:10px 14px;border:none;border-radius:8px;background:#00ffea;color:#001;cursor:pointer;font-weight:bold;letter-spacing:0.5px}
+#error{margin-top:8px;color:#ff5b5b;font-size:0.95em;min-height:18px;opacity:0;transition:opacity .3s}
+.shake{animation:shake .4s}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+</style>
+</head>
+<body>
+<div id="firewall-overlay">
+<div class="firewall-lines"></div>
+<div id="firewall-box">
+<div id="firewall-text">
+	🛡️ Firewall Active 🛡️
+	<br>
+	Access Restricted
+</div>
+<br>
+<span style="font-size:70px;position:relative;display:inline-block;">
+  🔒
+  <canvas id="lock-wheel" width="120" height="120" style="position:absolute;top:-30px;left:-30px;"></canvas>
+</span>
+
+<br><br>
+<p>Compromise the system to get access</p>
+<p>Type your name in lowercase to compromise the system</p>
+<br>
+<input id="name-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type your name to compromise">
+<button id="firewall-access" onclick="attemptAccess()">Enter</button>
+<div id="error"></div>
+</div>
+</div>
+
+<div id="balloon-container"></div>
+<div id="sparkles"></div>
+<div class="container">
+<h1>🎉 Happy Birthday, My Friend Alwin! 🎂</h1>
+<br><br><br>
+<div id="image-container">
+<img src="https://media.licdn.com/dms/image/v2/D5622AQGvSF_0JZQP8A/feedshare-shrink_800/B56Zj8imuYHMAg-/0/1756583594554?e=1762387200&v=beta&t=Uw0M1AvHx3lIu2_n0uazXATqO2j90-aLwklLfoDZK3A">
+<img src="https://media.licdn.com/dms/image/v2/D5622AQEGWmluHkHXTw/feedshare-shrink_2048_1536/B56ZSOICniHwAs-/0/1737551273488?e=1762387200&v=beta&t=GJR-elWmbMvY9EkOIlK3mhGBtLIWyle_y1USzO65h8c">
+<img src="https://media.licdn.com/dms/image/v2/D5635AQFOLtVBCEgB1g/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1714554808504?e=1760187600&v=beta&t=lWBEm6uWIMAj4zL3cKqB5FyqtUwWElfT5BXoqwTB92E">
+<img src="https://media.licdn.com/dms/image/v2/D5622AQH0M_BoIWC4ww/feedshare-shrink_1280/B56Zl38AYMH8As-/0/1758653867978?e=1762387200&v=beta&t=GWinlgBpsCGY6z5JnSQYrthZlY-pyLqLjxOdJ1wm11o">
+</div>
+<button onclick="showMessage()">Click for a Surprise 🎁</button>
+<div id="message"></div>
+</div>
+<script>
+const balloonContainer=document.getElementById('balloon-container');for(let i=0;i<15;i++){let b=document.createElement('div');b.className='balloon';b.style.left=Math.random()*100+'%';b.style.background='hsl('+Math.random()*360+',70%,60%)';b.style.animationDelay=Math.random()*5+'s';balloonContainer.appendChild(b);}
+const sparkleContainer=document.getElementById('sparkles');for(let i=0;i<80;i++){let s=document.createElement('div');s.className='sparkle';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*2+'s';sparkleContainer.appendChild(s);}
+const imgs=document.querySelectorAll('#image-container img');let i=0;function showNext(){if(i>0)imgs[i-1].style.opacity=0;if(i<imgs.length){imgs[i].style.opacity=1;i++;setTimeout(showNext,5000);}else{i=0;setTimeout(showNext,5000);}}showNext();
+function showMessage(){const msg=document.getElementById('message');msg.style.opacity=1;msg.innerHTML='💖 Alwin, may your year be filled with laughter, joy, and dreams that soar higher than these balloons! 💫<br><br>🌈 You make every moment brighter just by being in it. Enjoy your magical day! ✨';}
+
+function disableFirewall(){const overlay=document.getElementById('firewall-overlay');overlay.style.transition='opacity 1s ease';overlay.style.opacity='0';setTimeout(()=>overlay.style.display='none',1000);}
+
+function attemptAccess(){const input=document.getElementById('name-input');const err=document.getElementById('error');const box=document.getElementById('firewall-box');const val=input.value;if(val==='alwin'){err.style.opacity=0;box.classList.remove('shake');disableFirewall();return}err.textContent='Name incorrect. Type exactly "alwin" (all lowercase)';err.style.opacity=1;box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');}
+</script>
+</body>
+</html>

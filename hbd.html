@@ -178,7 +178,7 @@ button:active{transform:scale(.98)}
     <h2 id="hb">Happy Birthday!</h2>
     <div class="chip">⚡ 100% CHARGED</div>
     <p>May your year run on sunshine by day & stay powered through every night having No Dead Batteries & No Dark Patches! Only bright, efficient & sustainable joy ahead!</p>
-    <button onclick="window.location.href='https://harish040805.github.io/bdaywebsite/hbdcake.html'">Click to Next ⏩</button>
+    <button onclick="window.location.href='https://harish040805.github.io/bdaywebsite/hbd'">Click to Next ⏩</button>
   </div>
 </div>
 <script>
@@ -241,7 +241,7 @@ function speakText(text) {
   }
 }
 let lastCap = -1, lastMode = '', lastSpawn = 0;
-function render(t, allowSpeech = false){
+function render(t){
   const d = smooth(12,18,t);
   const root = document.documentElement.style;
   root.setProperty('--d', d.toFixed(3));
@@ -260,7 +260,7 @@ function render(t, allowSpeech = false){
   const p = clamp(pct,0,100);
   el.fill.style.transform = `scaleX(${p/100})`;
   el.bat.setAttribute('width', (56*p/100).toFixed(1));
-  el.pct.innerHTML = Math.Round(p) + '<small>%</small>';
+  el.pct.innerHTML = Math.round(p) + '<small>%</small>';
   const col = p<25 ? '#f87171' : p<55 ? '#fbbf24' : '#34d399';
   root.setProperty('--bat', col);
   el.bat.setAttribute('fill', col);
@@ -283,9 +283,7 @@ function render(t, allowSpeech = false){
     lastCap = ci; 
     el.cap.classList.add('hide');
     const captionText = CAPS[ci][1];
-    if (allowSpeech) {
-      speakText(captionText);
-    }
+    speakText(captionText);
     setTimeout(()=>{ 
       el.cap.textContent = captionText; 
       el.cap.classList.remove('hide'); 
@@ -345,8 +343,8 @@ let t=0, last=0, running=false;
 function frame(now){
   if (!running) return;
   t += Math.min((now-last)/1000, .1); last = now;
-  if (t >= DUR){ t = DUR; render(t, true); finish(); return; }
-  render(t, true); requestAnimationFrame(frame);
+  if (t >= DUR){ t = DUR; render(t); finish(); return; }
+  render(t); requestAnimationFrame(frame);
 }
 function begin(){
   t=0; lastCap=-1; lastMode=''; running=true;
@@ -365,7 +363,8 @@ function finish(){
   }, 500);
 }
 $('go').onclick = begin;
-// Removed render(0) call on load to completely prevent audio trigger on page refresh
+$('replay').onclick = begin;
+render(0);
 const cv = $('fx'), cx = cv.getContext('2d');
 function confetti(){
   const dpr = devicePixelRatio||1; cv.width=W*dpr; cv.height=H*dpr; cx.scale(dpr,dpr);

@@ -260,11 +260,6 @@ function startExperience() {
     setTimeout(() => overlay.remove(), 500);
   }
 
-  // Request fullscreen if supported
-  let rfs = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
-  if (rfs) rfs.call(document.documentElement).catch(() => {});
-
-  // Initialize confetti and lighting
   loop();
   burst();
   sl();

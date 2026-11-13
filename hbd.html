@@ -5,13 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Realistic Chocolate Birthday Cake</title>
 <link rel="stylesheet" href="hbdcss.css">
+<style>
+/* Overlay Styling */
+#start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 15, 20, 0.92);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+#start-overlay h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+#start-overlay p {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+#start-btn {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+#start-btn:hover {
+  background: #ff6b81;
+  transform: scale(1.05);
+}
+</style>
 </head>
 <body>
+
+<!-- Single Start Overlay -->
+<div id="start-overlay">
+  <h1>🎉 Happy Birthday!</h1>
+  <p>Click below to start the celebration, enable mic listening, and blow out the candles!</p>
+  <button id="start-btn" onclick="startExperience()">Click to Start</button>
+</div>
+
 <canvas id="cv"></canvas>
 <div class="m">
   <div class="h">
     <h1>Happy Birthday!</h1>
-    <p>Click candles, use button, or blow into mic to blow them out</p>
+    <p>Blow into your mic or click candles individually to blow them out</p>
   </div>
   <div class="s">
     <div class="g" id="gl"></div>
@@ -72,11 +126,9 @@
       </div>
     </div>
   </div>
-  <div class="cp">
-    <button class="b" onclick="bo()">🌬️ Blow Out Candles</button>
-    <button class="b" id="mb" onclick="im()">🎤 Enable Blow via Mic</button>
-  </div>
+  <!-- Bottom control panel buttons removed completely -->
 </div>
+
 <script>
 let hc = false;
 let cv = document.getElementById('cv');
@@ -199,7 +251,25 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-function im() {
+// Function triggered by the single overlay button
+function startExperience() {
+  // Fade out and remove overlay
+  let overlay = document.getElementById('start-overlay');
+  if (overlay) {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 500);
+  }
+
+  // Request fullscreen if supported
+  let rfs = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
+  if (rfs) rfs.call(document.documentElement).catch(() => {});
+
+  // Initialize confetti and lighting
+  loop();
+  burst();
+  sl();
+
+  // Enable Microphone & Start Listening
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ audio: true }).then((st) => {
       ma = new (window.AudioContext || window.webkitAudioContext)();
@@ -208,14 +278,12 @@ function im() {
       mc.fftSize = 256;
       ms.connect(mc);
       let bu = new Uint8Array(mc.frequencyBinCount);
-      let mb = document.getElementById('mb');
-      if (mb) mb.innerText = '🎤 Listening...';
       function ch() {
         mc.getByteFrequencyData(bu);
         let v = 0;
         for (let i = 0; i < bu.length; i++) v += bu[i];
         let av = v / bu.length;
-        if (av > 45) bo();
+        if (av > 45) bo(); // Blows out candles on loud sound/woof
         requestAnimationFrame(ch);
       }
       ch();
@@ -227,19 +295,7 @@ window.onload = function() {
   gs('s1', 20);
   gs('s2', 15);
   gs('s3', 10);
-  loop();
-  burst();
-  sl();
-  let rfs = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
-  if (rfs) rfs.call(document.documentElement).catch(() => {});
 };
-document.addEventListener('click', function ef() {
-  if (!document.fullscreenElement) {
-    let rfs = document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || document.documentElement.msRequestFullscreen;
-    if (rfs) rfs.call(document.documentElement).catch(() => {});
-  }
-  document.removeEventListener('click', ef);
-});
 </script>
 </body>
 </html>

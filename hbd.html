@@ -347,6 +347,9 @@ function frame(now){
   render(t); requestAnimationFrame(frame);
 }
 function begin(){
+  // Speak the opening greeting right when the ride begins
+  speakText(`Happy Birthday ${NAME}!`);
+  
   t=0; lastCap=-1; lastMode=''; running=true;
   $('start').classList.add('off'); $('end').classList.add('off');
   $('cap').classList.remove('hide');
@@ -363,7 +366,6 @@ function finish(){
   }, 500);
 }
 $('go').onclick = begin;
-$('replay').onclick = begin;
 render(0);
 const cv = $('fx'), cx = cv.getContext('2d');
 function confetti(){

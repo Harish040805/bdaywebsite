@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realistic Chocolate Birthday Cake</title>
+<link rel="stylesheet" href="hbdcss.css">
+<style>
+/* Overlay Styling */
+#start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 15, 20, 0.92);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+#start-overlay h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+#start-overlay p {
+  font-size: 1.1rem;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+#start-btn {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  transition: transform 0.2s, background 0.2s;
+}
+#start-btn:hover {
+  background: #ff6b81;
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<!-- Single Start Overlay -->
+<div id="start-overlay">
+  <h1>🎉 Happy Birthday!</h1>
+  <p>Click below to start the celebration, enable mic listening, and blow out the candles!</p>
+  <button id="start-btn" onclick="startExperience()">Click to Start</button>
+</div>
+
+<canvas id="cv"></canvas>
+<div class="m">
+  <div class="h">
+    <h1>Happy Birthday!</h1>
+    <p>Blow into your mic or click candles individually to blow them out</p>
+  </div>
+  <div class="s">
+    <div class="g" id="gl"></div>
+    <div class="cw">
+      <div class="p"></div>
+      <div class="t t3">
+        <div class="ts"></div>
+        <div class="ds">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <div class="d"></div><div class="d"></div>
+        </div>
+        <div class="pc">
+          <div class="pd"></div><div class="pd"></div><div class="pd"></div>
+        </div>
+        <div class="cs" id="s3"></div>
+        <div class="cg">
+          <div class="cd ca" onclick="ex(this)">
+            <div class="wk"></div>
+            <div class="f"><div class="fi"></div></div>
+            <div class="sm"></div>
+          </div>
+          <div class="cd cc cb" onclick="ex(this)">
+            <div class="wk"></div>
+            <div class="f"><div class="fi"></div></div>
+            <div class="sm"></div>
+          </div>
+          <div class="cd cc" onclick="ex(this)">
+            <div class="wk"></div>
+            <div class="f"><div class="fi"></div></div>
+            <div class="sm"></div>
+          </div>
+        </div>
+      </div>
+      <div class="t t2">
+        <div class="ts"></div>
+        <div class="ds">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+        </div>
+        <div class="pc">
+          <div class="pd"></div><div class="pd"></div>
+          <div class="pd"></div><div class="pd"></div>
+        </div>
+        <div class="cs" id="s2"></div>
+      </div>
+      <div class="t t1">
+        <div class="ts"></div>
+        <div class="ds">
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <div class="d"></div><div class="d"></div><div class="d"></div>
+          <div class="d"></div>
+        </div>
+        <div class="pc">
+          <div class="pd"></div><div class="pd"></div><div class="pd"></div>
+          <div class="pd"></div><div class="pd"></div>
+        </div>
+        <div class="cs" id="s1"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let hc = false;
+let cv = document.getElementById('cv');
+let x = cv.getContext('2d');
+let ps = [];
+let ma, ms, mc;
+
+function gs(i, n) {
+  let c = document.getElementById(i);
+  if (!c) return;
+  for (let k = 0; k < n; k++) {
+    let e = document.createElement('div');
+    e.className = 'sv';
+    e.style.left = (12 + Math.random() * 76) + '%';
+    e.style.top = (20 + Math.random() * 60) + '%';
+    e.style.transform = `rotate(${Math.random() * 360}deg)`;
+    c.appendChild(e);
+  }
+}
+
+function sl() {
+  let cl = document.querySelectorAll('.cd');
+  cl.forEach((c) => {
+    c.classList.add('lt');
+  });
+}
+
+function ex(e) {
+  if (!e.classList.contains('ot')) {
+    e.classList.add('ot');
+    ck();
+  }
+}
+
+function bo() {
+  let cl = document.querySelectorAll('.cd');
+  cl.forEach((c, i) => {
+    setTimeout(() => {
+      if (!c.classList.contains('ot')) {
+        c.classList.add('ot');
+        ck();
+      }
+    }, i * 180);
+  });
+}
+
+function ck() {
+  let cl = document.querySelectorAll('.cd');
+  let a = Array.from(cl).every(c => c.classList.contains('ot'));
+  let g = document.getElementById('gl');
+  if (a && g) {
+    g.style.opacity = '0.08';
+  }
+}
+
+function rc() {
+  cv.width = window.innerWidth;
+  cv.height = window.innerHeight;
+}
+window.addEventListener('resize', rc);
+rc();
+
+class P {
+  constructor(cx, cy) {
+    this.x = cx;
+    this.y = cy;
+    let a = Math.random() * Math.PI * 2;
+    let s = Math.random() * 18 + 4;
+    this.vx = Math.cos(a) * s;
+    this.vy = Math.sin(a) * s;
+    this.g = 0.12;
+    this.d = 0.985;
+    this.sz = Math.random() * 9 + 4;
+    this.c = `hsl(${Math.random() * 60 + 15}, 85%, ${Math.random() * 45 + 45}%)`;
+    this.r = Math.random() * 360;
+    this.rs = Math.random() * 10 - 5;
+    this.al = 1;
+    this.f = 0.005 + Math.random() * 0.005;
+  }
+  u() {
+    this.vx *= this.d;
+    this.vy *= this.d;
+    this.vy += this.g;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.r += this.rs;
+    this.al -= this.f;
+  }
+  draw() {
+    x.save();
+    x.translate(this.x, this.y);
+    x.rotate((this.r * Math.PI) / 180);
+    x.globalAlpha = Math.max(0, this.al);
+    x.fillStyle = this.c;
+    x.fillRect(-this.sz / 2, -this.sz / 2, this.sz, this.sz);
+    x.restore();
+  }
+}
+
+function burst() {
+  if (hc) return;
+  hc = true;
+  let cx = cv.width / 2;
+  let cy = cv.height / 2;
+  for (let i = 0; i < 320; i++) {
+    ps.push(new P(cx, cy));
+  }
+}
+
+function loop() {
+  x.clearRect(0, 0, cv.width, cv.height);
+  for (let i = ps.length - 1; i >= 0; i--) {
+    let p = ps[i];
+    p.u();
+    p.draw();
+    if (p.al <= 0 || p.y > cv.height + 50) {
+      ps.splice(i, 1);
+    }
+  }
+  requestAnimationFrame(loop);
+}
+
+// Function triggered by the single overlay button (Fullscreen code removed)
+function startExperience() {
+  // Fade out and remove overlay
+  let overlay = document.getElementById('start-overlay');
+  if (overlay) {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 500);
+  }
+
+  // Initialize confetti and lighting
+  loop();
+  burst();
+  sl();
+
+  // Enable Microphone & Start Listening
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((st) => {
+      ma = new (window.AudioContext || window.webkitAudioContext)();
+      ms = ma.createMediaStreamSource(st);
+      mc = ma.createAnalyser();
+      mc.fftSize = 256;
+      ms.connect(mc);
+      let bu = new Uint8Array(mc.frequencyBinCount);
+      function ch() {
+        mc.getByteFrequencyData(bu);
+        let v = 0;
+        for (let i = 0; i < bu.length; i++) v += bu[i];
+        let av = v / bu.length;
+        if (av > 45) bo(); // Blows out candles on loud sound/woof
+        requestAnimationFrame(ch);
+      }
+      ch();
+    }).catch(() => {});
+  }
+}
+
+window.onload = function() {
+  gs('s1', 20);
+  gs('s2', 15);
+  gs('s3', 10);
+};
+</script>
+</body>
+</html>

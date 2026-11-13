@@ -178,7 +178,7 @@ button:active{transform:scale(.98)}
     <h2 id="hb">Happy Birthday!</h2>
     <div class="chip">⚡ 100% CHARGED</div>
     <p>May your year run on sunshine by day & stay powered through every night having No Dead Batteries & No Dark Patches! Only bright, efficient & sustainable joy ahead!</p>
-    <button onclick="window.location.href='https://harish040805.github.io/bdaywebsite/hbdcake.html'">Click to Next ⏩</button>
+    <button onclick="window.location.href='https://harish040805.github.io/bdaywebsite/hbd'">Click to Next ⏩</button>
   </div>
 </div>
 <script>
@@ -230,6 +230,7 @@ function fmtClock(t){
   const ap = hh>=12 ? 'PM' : 'AM', h12 = hh%12 || 12;
   return `${h12}:${String(m).padStart(2,'0')} ${ap}`;
 }
+
 function speakText(text) {
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -240,6 +241,7 @@ function speakText(text) {
     window.speechSynthesis.speak(utterance);
   }
 }
+
 let lastCap = -1, lastMode = '', lastSpawn = 0;
 function render(t){
   const d = smooth(12,18,t);
@@ -347,9 +349,19 @@ function frame(now){
   render(t); requestAnimationFrame(frame);
 }
 function begin(){
+  // Force a dummy utterance unlock on the direct user click event so audio synthesis is fully enabled
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+  }
+
   t=0; lastCap=-1; lastMode=''; running=true;
   $('start').classList.add('off'); $('end').classList.add('off');
   $('cap').classList.remove('hide');
+  
+  // Speak the first caption right away
+  speakText(CAPS[0][1]);
+
   last = performance.now(); requestAnimationFrame(frame);
 }
 function finish(){
@@ -363,7 +375,6 @@ function finish(){
   }, 500);
 }
 $('go').onclick = begin;
-$('replay').onclick = begin;
 render(0);
 const cv = $('fx'), cx = cv.getContext('2d');
 function confetti(){

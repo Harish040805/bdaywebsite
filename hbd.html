@@ -240,7 +240,7 @@ function speakText(text) {
     window.speechSynthesis.speak(utterance);
   }
 }
-let lastCap = -1, lastMode = '', lastSpawn = 0;
+let lastCap = -1, lastMode = '', lastSpawn = 0, running = false;
 function render(t){
   const d = smooth(12,18,t);
   const root = document.documentElement.style;
@@ -278,17 +278,22 @@ function render(t){
   el.watts.textContent = solar ? `+${Math.round(260+Math.sin(t*3)*20)} W solar` : `−${Math.round(180+Math.sin(t*4)*15)} W draw`;
   el.time.textContent = fmtClock(t);
   el.prog.style.transform = `scaleX(${t/DUR})`;
-  let ci = 0; CAPS.forEach((c,i)=>{ if (t>=c[0]) ci=i; });
-  if (ci !== lastCap){
-    lastCap = ci; 
-    el.cap.classList.add('hide');
-    const captionText = CAPS[ci][1];
-    speakText(captionText);
-    setTimeout(()=>{ 
-      el.cap.textContent = captionText; 
-      el.cap.classList.remove('hide'); 
-    }, 350);
+  
+  // Only process speech and captions if the ride has officially started
+  if (running) {
+    let ci = 0; CAPS.forEach((c,i)=>{ if (t>=c[0]) ci=i; });
+    if (ci !== lastCap){
+      lastCap = ci; 
+      el.cap.classList.add('hide');
+      const captionText = CAPS[ci][1];
+      speakText(captionText);
+      setTimeout(()=>{ 
+        el.cap.textContent = captionText; 
+        el.cap.classList.remove('hide'); 
+      }, 350);
+    }
   }
+
   if (t-lastSpawn > .55){
     lastSpawn = t;
     const f = document.createElement('div'); f.className='float';
@@ -339,7 +344,7 @@ function pose(now){
   B.hat.style.marginTop = (sway*u)+'px';
 }
 (function tick(now){ pose(now); requestAnimationFrame(tick); })(performance.now());
-let t=0, last=0, running=false;
+let t=0, last=0;
 function frame(now){
   if (!running) return;
   t += Math.min((now-last)/1000, .1); last = now;
@@ -347,10 +352,10 @@ function frame(now){
   render(t); requestAnimationFrame(frame);
 }
 function begin(){
-  // Speak the opening greeting right when the ride begins
+  running = true;
   speakText(`Happy Birthday ${NAME}!`);
   
-  t=0; lastCap=-1; lastMode=''; running=true;
+  t=0; lastCap=-1; lastMode=''; 
   $('start').classList.add('off'); $('end').classList.add('off');
   $('cap').classList.remove('hide');
   last = performance.now(); requestAnimationFrame(frame);
